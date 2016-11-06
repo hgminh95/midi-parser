@@ -23,6 +23,11 @@ public class MidiTrack {
         }
     }
 
+    public int size() {
+        if (events == null) return 0;
+        return events.size();
+    }
+
     public MidiTrack addEvent(TrackEvent event) {
         if (events == null) events = new ArrayList<>();
 

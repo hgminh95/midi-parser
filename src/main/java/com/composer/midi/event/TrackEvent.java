@@ -12,7 +12,15 @@ public abstract class TrackEvent {
     public static final int META_EVENT = 3;
 
     public static TrackEvent fromMidiEvent(MidiEvent event) {
-        return ControlEvent.fromMidiEvent(event);
+        if (event.getMessage() instanceof ShortMessage) {
+            return ControlEvent.fromMidiEvent(event);
+        }
+        else if (event.getMessage() instanceof MetaMessage) {
+            return MetaEvent.fromMidiEvent(event);
+        }
+        else {
+            return new MetaEvent();
+        }
     }
 
     private long tick;
@@ -21,7 +29,7 @@ public abstract class TrackEvent {
         return tick;
     }
 
-    public TrackEvent setTick() {
+    public TrackEvent setTick(long tick) {
         this.tick = tick;
 
         return this;

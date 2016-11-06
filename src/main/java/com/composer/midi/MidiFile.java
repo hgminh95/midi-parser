@@ -10,7 +10,7 @@ import javax.sound.midi.*;
  */
 public class MidiFile {
 
-    List<MidiTrack> tracks;
+    private List<MidiTrack> tracks;
 
     public static MidiFile fromFile(String path) throws Exception {
         return new MidiFile(path);
@@ -19,9 +19,14 @@ public class MidiFile {
     public MidiFile(String path) throws Exception {
         Sequence sequence = MidiSystem.getSequence(new File(path));
 
-        for (Track track :  sequence.getTracks()) {
+        for (Track track : sequence.getTracks()) {
             addTrack(MidiTrack.fromTrack(track));
         }
+    }
+
+    public int size() {
+        if (tracks == null) return 0;
+        return tracks.size();
     }
 
     public MidiFile addTrack(MidiTrack track) {
